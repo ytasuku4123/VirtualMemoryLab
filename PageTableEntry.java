@@ -7,7 +7,7 @@ class PageTableEntry {
     private int frame;
 
 	public PageTableEntry() {
-	    inMemory = false;
+	    inMemory = true;
 	    frame = 0;
 	}
 	
@@ -15,7 +15,11 @@ class PageTableEntry {
 	    return frame;
 	}
 	
-	boolean inMemory(){
+	void setInMemory(boolean tf){
+		inMemory = tf;
+	}
+	
+	boolean getInMemory(){
 	    return inMemory;
 	}
 	

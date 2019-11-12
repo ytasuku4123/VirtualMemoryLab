@@ -9,7 +9,16 @@ class Memory {
 	    frames = new PageTableEntry[30];
 	}
 	
-	void setFrame(int frame, PageTableEntry pte){
+	void setFrame(int index, PageTableEntry pte){
+		if(frames[index] == null){
+			frames[index] = pte;
+			frames[index].setInMemory(true);
+			
+		}else{
+			frames[index].setInMemory(false);
+			frames[index] = pte;
+			frames[index].setInMemory(true);
+		}
 	    
 	}
 	

@@ -14,8 +14,8 @@ class PageTable {
 	    return entries[pageEntryIndex];
 	}
 	
-	void setPTE(int pt, PageTableEntry pte){
-	    
+	void setPTE(int index, PageTableEntry pte){
+	    entries[index] = pte;
 	}
 	
 }
