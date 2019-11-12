@@ -2,15 +2,18 @@ import java.io.*;
 import java.util.*; 
 
 public class main {
-    public static int newProcess;
-    public static int switchProcess;
+    public static int newIndex;
+    public static int switchIndex;
     public static int accessNum;
+    //this is a process
+    static ArrayList<PageTable> pts = new ArrayList<PageTable>();  
+    static PageTable currentPageTable;
 
 	public static void main(String[] args) {
 		readFile();
 	}
-	
-	public static void readFile(){
+
+	static void readFile(){
 	         try {
             // ファイルのパスを指定する
             File file = new File("VMInput1.txt");
@@ -25,24 +28,20 @@ public class main {
             FileReader fileReader = new FileReader(file);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String data;
-            ArrayList<Integer> accessNumbers = new ArrayList<Integer>(); 
             while ((data = bufferedReader.readLine()) != null) {
                 String[] contents = data.split(" ");
                 if(contents[0].equals("new")){
-                    newProcess = Integer.parseInt(contents[1]);
+                    newIndex = Integer.parseInt(contents[1]);
+                    createPageTable(newIndex);
                 }else if(contents[0].equals("switch")){
-                    switchProcess = Integer.parseInt(contents[1]);
+                    switchIndex = Integer.parseInt(contents[1]);
+                    switchPageTable(switchIndex);
                 }else if(contents[0].equals("access")){
-                    accessNumbers.add(Integer.parseInt(contents[1]));
+                    accessNum = Integer.parseInt(contents[1]);
+                    int indexAccessNum = accessNum>>10;
+                    System.out.println("access: " + indexAccessNum);
                 }
                 
-            }
-            
-            System.out.println("new: " + newProcess);
-            System.out.println("switch " + switchProcess);
-            System.out.println("access: ");
-            for(int a : accessNumbers){
-                System.out.println(a);
             }
             
             // 最後にファイルを閉じてリソースを開放する
@@ -52,5 +51,18 @@ public class main {
             e.printStackTrace();
         }
 	}
+	
+    	
+	static void createPageTable(int newIndex){
+        PageTable p = new PageTable();
+        pts.add(p);
+        currentPageTable = p;
+	}	
+	
+	static void switchPageTable(int switchIndex){
+	    currentPageTable = pts.get(switchIndex - 1);
+	}
+	
+	
 
 }
